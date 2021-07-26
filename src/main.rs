@@ -31,7 +31,7 @@ use twitter_stream::{Token, TwitterStream};
 async fn main() {
     println!("hi");
     let token = Token::from_parts("yex95KUGuZi1Et7AwQNMIpooW", "DOtMcrVCSbUyVDFB7nKepUKWR2hrT1XGUFVkJNKegU25Cb71JX", "1379464579705618521-w9rVTAsbdTJLG5ENnIGvAPog72wRPQ", "AxBjSzE1wPIVWcGqS6BASJ0qdWPTjzOJcswK4QP5R1Lg5");
-    TwitterStream::track("@Twitter", &token)
+    TwitterStream::follow(&[1418481330120056833], &token)
         .try_flatten_stream()
         .try_for_each(|json| {
             println!("{}", json);
@@ -39,4 +39,12 @@ async fn main() {
         })
         .await
         .unwrap();
+    /*TwitterStream::track("@Twitter", &token)
+        .try_flatten_stream()
+        .try_for_each(|json| {
+            println!("{}", json);
+            future::ok(())
+        })
+        .await
+        .unwrap();*/
 }
