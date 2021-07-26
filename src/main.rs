@@ -23,29 +23,25 @@ fn main(){
 
     sleep(Duration::from_millis(100000));
 }*/
+use std::thread;
+use std::time::Duration;
 
 use futures::prelude::*;
 use twitter_stream::{Token, TwitterStream};
-
+mod twitter_listener_service;
+use futures::executor::block_on;
 #[tokio::main]
 async fn main() {
-    println!("hi");
-    let token = Token::from_parts("yex95KUGuZi1Et7AwQNMIpooW", "DOtMcrVCSbUyVDFB7nKepUKWR2hrT1XGUFVkJNKegU25Cb71JX", "1379464579705618521-w9rVTAsbdTJLG5ENnIGvAPog72wRPQ", "AxBjSzE1wPIVWcGqS6BASJ0qdWPTjzOJcswK4QP5R1Lg5");
-    TwitterStream::follow(&[1418481330120056833], &token)
-        .try_flatten_stream()
-        .try_for_each(|json| {
-            println!("{}", json);
-            future::ok(())
-        })
-        .await
-        .unwrap();
+    let twitter_listener_service = twitter_listener_service::twitter_listner::start_twitter_listner_services();
 
-    /*TwitterStream::track("@Twitter", &token)
-        .try_flatten_stream()
-        .try_for_each(|json| {
-            println!("{}", json);
-            future::ok(())
-        })
-        .await
-        .unwrap();*/
+    println!("twitter listener services up");
+   /* let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {} from the spawned thread!", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });*/
+
+    block_on(twitter_listener_service);
+
 }
