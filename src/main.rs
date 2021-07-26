@@ -39,6 +39,7 @@ async fn main() {
         })
         .await
         .unwrap();
+
     /*TwitterStream::track("@Twitter", &token)
         .try_flatten_stream()
         .try_for_each(|json| {
