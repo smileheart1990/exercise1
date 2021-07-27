@@ -3,7 +3,6 @@ use twitter_stream::{Token, TwitterStream};
 use serde::{Deserialize, Serialize};
 use serde_json::{Result, Value};
 use std::thread;
-mod observer;
 // this is just a short version, the tweet api return more fields, refer to tweet.json for more detail
 struct short_tweet_message {
     id: String,
@@ -30,10 +29,7 @@ impl twitter_listner {
                         text: String::from(short_tweet_message_for_serde["text"].as_str()),
                         time: String::from(short_tweet_message_for_serde["created_at"].as_str()),
                     };
-                    Observer::
                 });
-
-
                 future::ok(())
             }).await.unwrap();
     }
