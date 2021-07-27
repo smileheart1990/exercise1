@@ -29,19 +29,16 @@ use std::time::Duration;
 use futures::prelude::*;
 use twitter_stream::{Token, TwitterStream};
 mod twitter_listener_service;
+
+
 use futures::executor::block_on;
 #[tokio::main]
 async fn main() {
     let twitter_listener_service = twitter_listener_service::twitter_listner::start_twitter_listner_services();
-
     println!("twitter listener services up");
-   /* let handle = thread::spawn(|| {
-        for i in 1..10 {
-            println!("hi number {} from the spawned thread!", i);
-            thread::sleep(Duration::from_millis(1));
-        }
-    });*/
 
+    //let observer_services = observer::Observer::start_observer_services();
     block_on(twitter_listener_service);
+    //block_on(observer_services);
 
 }
